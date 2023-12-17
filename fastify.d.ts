@@ -7,5 +7,7 @@ declare module "fastify" {
         entity: new () => Entity
       ): Repository<Entity>;
     };
+
+    pokemonService: PokemonService;
   }
 }

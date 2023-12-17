@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 
-import { UserEntity } from "./entity/user-entity";
+import { UserEntity } from "./entities/user-entity";
 
 export default async function (
   fastify: FastifyInstance,

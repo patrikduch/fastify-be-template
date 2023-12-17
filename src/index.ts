@@ -1,12 +1,15 @@
 import { fastify } from "fastify";
-import mercurius from "mercurius";
+import mercurius, { IResolvers } from "mercurius";
 import pino from "pino";
 import test from "./tes";
 import { renderPlaygroundPage } from "graphql-playground-html";
 import { schema } from "./graphql/schema";
 import ormConfig from "./ormconfig.json";
-import { UserEntity } from "./entity/user-entity";
+import { UserEntity } from "./entities/user-entity";
 import { helloResolver } from "./graphql/resolvers/hello-resolver";
+import servicesPlugin from "./plugins/servicesPlugin";
+import { typeOrmExampleResolver } from "./graphql/resolvers/typeorm-example-resolver";
+import { IGraphQLContext } from "./graphql/resolvers/context";
 
 const dbConn = require("typeorm-fastify-plugin");
 
@@ -15,9 +18,10 @@ const server = fastify({
   logger: pino({ level: "info" }),
 });
 
-const resolvers = {
+const resolvers: IResolvers<any, IGraphQLContext> = {
   Query: {
     hello: helloResolver,
+    getUsers: typeOrmExampleResolver,
   },
 };
 // GraphQL quering background
@@ -29,6 +33,12 @@ server.get("/playground", (_, reply) => {
 server.register(mercurius, {
   schema,
   resolvers,
+  context: (request, reply) => {
+    // Make sure to return the context object with the Fastify instance
+    return {
+      fastify: server,
+    };
+  },
 });
 
 server
@@ -38,6 +48,7 @@ server
   })
   .ready();
 
+server.register(servicesPlugin);
 server.register(test);
 
 const start = async () => {
