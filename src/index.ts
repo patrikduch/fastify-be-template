@@ -6,6 +6,7 @@ import { renderPlaygroundPage } from "graphql-playground-html";
 import { schema } from "./graphql/schema";
 import ormConfig from "./ormconfig.json";
 import { UserEntity } from "./entity/user-entity";
+import { helloResolver } from "./graphql/resolvers/hello-resolver";
 
 const dbConn = require("typeorm-fastify-plugin");
 
@@ -16,7 +17,7 @@ const server = fastify({
 
 const resolvers = {
   Query: {
-    hello: () => "Hello World!",
+    hello: helloResolver,
   },
 };
 // GraphQL quering background
