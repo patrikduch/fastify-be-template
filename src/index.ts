@@ -4,6 +4,10 @@ import pino from "pino";
 import test from "./tes";
 import { renderPlaygroundPage } from "graphql-playground-html";
 import { schema } from "./graphql/schema";
+import ormConfig from "./ormconfig.json";
+import { UserEntity } from "./entity/user-entity";
+
+const dbConn = require("typeorm-fastify-plugin");
 
 const Port = process.env.PORT || 7000;
 const server = fastify({
@@ -15,18 +19,25 @@ const resolvers = {
     hello: () => "Hello World!",
   },
 };
-
+// GraphQL quering background
 server.get("/playground", (_, reply) => {
   reply.header("Content-Type", "text/html");
   reply.send(renderPlaygroundPage({ endpoint: "/graphql" }));
 });
 
-server.register(test);
-
 server.register(mercurius, {
   schema,
   resolvers,
 });
+
+server
+  .register(dbConn, {
+    ...ormConfig,
+    entities: [UserEntity],
+  })
+  .ready();
+
+server.register(test);
 
 const start = async () => {
   try {
