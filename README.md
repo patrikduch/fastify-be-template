@@ -11,6 +11,7 @@
 
 yarn add fastify mercurius graphql
 yarn add @fastify/awilix awilix
+yarn add yarn add ts-node -D
 
 TypeORM
 https://github.com/jclemens24/typeorm-fastify-plugin

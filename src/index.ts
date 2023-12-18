@@ -1,7 +1,7 @@
 import { fastify } from "fastify";
 import mercurius, { IResolvers } from "mercurius";
 import pino from "pino";
-import test from "./tes";
+import homecontroller from "./rest/home/home-controller";
 import { renderPlaygroundPage } from "graphql-playground-html";
 import { schema } from "./graphql/schema";
 import ormConfig from "./ormconfig.json";
@@ -46,7 +46,7 @@ server.get("/playground", (_, reply) => {
 server.register(mercurius, {
   schema,
   resolvers,
-  context: (request, reply) => {
+  context: (_request, _reply) => {
     // Make sure to return the context object with the Fastify instance
     return {
       fastify: server,
@@ -61,7 +61,7 @@ server
   })
   .ready();
 
-server.register(test);
+server.register(homecontroller);
 
 const start = async () => {
   try {
