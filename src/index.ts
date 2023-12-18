@@ -7,15 +7,28 @@ import { schema } from "./graphql/schema";
 import ormConfig from "./ormconfig.json";
 import { UserEntity } from "./entities/user-entity";
 import { helloResolver } from "./graphql/resolvers/hello-resolver";
-import servicesPlugin from "./plugins/servicesPlugin";
 import { typeOrmExampleResolver } from "./graphql/resolvers/typeorm-example-resolver";
-import { IGraphQLContext } from "./graphql/resolvers/context";
+import { diContainer, fastifyAwilixPlugin } from "@fastify/awilix";
+import TypeOrmExampleService from "./services/typeorm-example-service";
+import { asClass, asValue } from "awilix";
+import { IGraphQLContext } from "./typescript/interfaces/IGraphQLContext";
 
 const dbConn = require("typeorm-fastify-plugin");
 
 const Port = process.env.PORT || 7000;
 const server = fastify({
   logger: pino({ level: "info" }),
+});
+
+// Registration of DI container
+server.register(fastifyAwilixPlugin, {
+  disposeOnClose: true,
+  disposeOnResponse: true,
+});
+// Registration of DI services
+diContainer.register({
+  logger: asValue(server.log),
+  typeOrmExampleService: asClass(TypeOrmExampleService).singleton(),
 });
 
 const resolvers: IResolvers<any, IGraphQLContext> = {
@@ -48,7 +61,6 @@ server
   })
   .ready();
 
-server.register(servicesPlugin);
 server.register(test);
 
 const start = async () => {

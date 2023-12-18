@@ -10,6 +10,7 @@
 </ul>
 
 yarn add fastify mercurius graphql
+yarn add @fastify/awilix awilix
 
 TypeORM
 https://github.com/jclemens24/typeorm-fastify-plugin

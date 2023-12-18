@@ -1,10 +1,14 @@
-import { FastifyInstance } from "fastify";
+import { FastifyBaseLogger } from "fastify";
 
 class TypeOrmExampleService {
-  private readonly fastify;
+  private readonly logger: FastifyBaseLogger;
 
-  constructor(fastify: FastifyInstance) {
-    this.fastify = fastify;
+  constructor({ logger }: { logger: FastifyBaseLogger }) {
+    this.logger = logger;
+  }
+
+  public test() {
+    console.log(this.logger.info("test patrik duch"));
   }
 }
 
