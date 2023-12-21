@@ -16,5 +16,15 @@ yarn add yarn add ts-node -D
 yarn add ts-node -D
 yarn add tsconfig-paths -D
 
-TypeORM
+## TypeORM
+
 https://github.com/jclemens24/typeorm-fastify-plugin
+
+### Migrations
+
+yarn run migration:generate ./src/migrations/test
+
+## Start the application
+
+yarn run build
+yarn run dev
