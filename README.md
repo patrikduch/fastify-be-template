@@ -15,6 +15,7 @@ yarn add yarn add ts-node -D
 
 yarn add ts-node -D
 yarn add tsconfig-paths -D
+yarn add rimraf -D
 
 ## TypeORM
 

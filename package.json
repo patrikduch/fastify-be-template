@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -w",
+    "clean": "rimraf build",
     "dev": "nodemon build/index.js",
     "start": "node build/index.js",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "migrations:run": "yarn run typeorm migration:run -d ./src/data-source.ts",
-    "migration:generate": "yarn run typeorm migration:generate -d ./src/data-source.ts"
+    "migrations:run": "yarn run clean && tsc && yarn run typeorm migration:run -d ./src/data-source.ts",
+    "migration:generate": "yarn run clean && tsc && yarn run typeorm migration:generate -d ./src/data-source.ts",
+    "migration:create": "yarn run clean && tsc && yarn run typeorm migration:create"
   },
   "author": "Patrik Duch",
   "license": "ISC",
@@ -32,6 +34,7 @@
     "@types/node": "^20.10.4",
     "@types/pino": "^7.0.5",
     "graphql-playground-html": "^1.6.30",
+    "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typeorm-fastify-plugin": "^1.0.5",
