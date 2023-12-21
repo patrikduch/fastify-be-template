@@ -30,6 +30,8 @@
     "@types/node": "^20.10.4",
     "@types/pino": "^7.0.5",
     "graphql-playground-html": "^1.6.30",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typeorm-fastify-plugin": "^1.0.5",
     "typescript": "^5.3.3"
   }
