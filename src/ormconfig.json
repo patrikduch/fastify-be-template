@@ -5,5 +5,6 @@
   "username": "patrikduch",
   "password": "duch",
   "database": "fastify-postgres-db",
-  "synchronize": true
+  "entities": ["build/entities/**/*.js"],
+  "migrations": ["build/migrations/**/*.js"]
 }

@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { fastify } from "fastify";
 import mercurius, { IResolvers } from "mercurius";
 import pino from "pino";
@@ -54,12 +55,7 @@ server.register(mercurius, {
   },
 });
 
-server
-  .register(dbConn, {
-    ...ormConfig,
-    entities: [UserEntity],
-  })
-  .ready();
+server.register(dbConn, ormConfig).ready();
 
 server.register(homecontroller);
 
