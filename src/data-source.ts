@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { UserEntity } from "./entities/user-entity";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -11,7 +10,7 @@ export const AppDataSource = new DataSource({
   database: "fastify-postgres-db",
   synchronize: false,
   logging: false,
-  entities: [UserEntity],
+  entities: ["src/entities/**/*.ts"],
   migrations: ["src/migrations/**/*.ts"],
   subscribers: [],
 });
