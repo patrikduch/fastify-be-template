@@ -5,8 +5,7 @@ import pino from "pino";
 import homecontroller from "./rest/home/home-controller";
 import { renderPlaygroundPage } from "graphql-playground-html";
 import { schema } from "./graphql/schema";
-import ormConfig from "./ormconfig.json";
-import { UserEntity } from "./entities/user-entity";
+import { AppDataSource } from "./data-source";
 import { helloResolver } from "./graphql/resolvers/hello-resolver";
 import { typeOrmExampleResolver } from "./graphql/resolvers/typeorm-example-resolver";
 import { diContainer, fastifyAwilixPlugin } from "@fastify/awilix";
@@ -55,7 +54,11 @@ server.register(mercurius, {
   },
 });
 
-server.register(dbConn, ormConfig).ready();
+server
+  .register(dbConn, {
+    connection: AppDataSource,
+  })
+  .ready();
 
 server.register(homecontroller);
 

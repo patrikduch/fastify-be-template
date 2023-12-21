@@ -6,4 +6,9 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({
+    name: "username",
+  })
+  userName: string;
 }
